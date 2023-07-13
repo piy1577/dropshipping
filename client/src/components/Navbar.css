@@ -1,0 +1,17 @@
+/* Navbar.css */
+nav .container {
+    display: flex;
+    justify-content: space-between;
+}
+nav .container .links {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: black;
+    text-decoration: none;
+    margin-left: 10px;
+}
