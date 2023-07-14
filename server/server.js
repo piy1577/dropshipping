@@ -4,7 +4,7 @@ require('dotenv').config();
 const app = require('./src/app.js')
 
 const server = http.createServer(app);
-const PORT = process.env.PORT || 800;
+const PORT = process.env.PORT || 8000;
 const uri = process.env.MONGO_URL.replace('<password>', process.env.DATABASE_PASSWORD);
 
 mongoose.connection.once('open', () => {
