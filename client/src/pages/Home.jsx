@@ -1,48 +1,25 @@
-// HomePage.js
-import React, { useState, useEffect } from "react";
-import ProductCard from "../components/ProductCard";
+import React from "react";
+import Carousel from "../components/carousel";
+import { Form, Button } from "react-bootstrap";
 
-function HomePage() {
-    const [products, setProducts] = useState([
-        {
-            image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80",
-            title: "Headphone",
-            description: "Best headphone at this price",
-            price: 1500,
-            id: 1,
-        },
-        {
-            image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80",
-            title: "Headphone",
-            description: "Best headphone at this price",
-            price: 1500,
-            id: 1,
-        },
-        {
-            image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80",
-            title: "Headphone",
-            description: "Best headphone at this price",
-            price: 1500,
-            id: 1,
-        },
-        {
-            image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80",
-            title: "Headphone",
-            description: "Best headphone at this price",
-            price: 1500,
-            id: 1,
-        },
-    ]);
+const Home = () => {
     return (
-        <div>
-            <h1>Dropshipping Website</h1>
-            <div className="product-list">
-                {products.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                ))}
-            </div>
-        </div>
+        <>
+            <Form
+                style={{ textAlign: "center", margin: "10px" }}
+                className="d-flex"
+            >
+                <Form.Control
+                    type="search"
+                    placeholder="&#x1F50D; search"
+                    style={{ textAlign: "center", margin: " auto 10px" }}
+                />
+                <Button>Search</Button>
+            </Form>
+            <h1 style={{ textAlign: "center", fontSize: "50px" }}>Products</h1>
+            <Carousel />;
+        </>
     );
-}
+};
 
-export default HomePage;
+export default Home;

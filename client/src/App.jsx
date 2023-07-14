@@ -1,21 +1,21 @@
-import { createBrowserRouter, Route, RouterProvider } from "react-router-dom";
-import HomePage from "./pages/Home";
-import ProductPage from "./pages/ProductPage";
-import CartPage from "./pages/CartPage";
-import Navbar from "./components/Navbar";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./pages/Home";
+// import ProductPage from "./pages/ProductPage";
+// import CartPage from "./pages/CartPage";
+import Header from "./components/Header";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 const Router = createBrowserRouter([
     {
         path: "/",
-        element: <Navbar />,
+        element: <Header />,
         children: [
-            { index: true, element: <HomePage /> },
-            { path: "/product/:id", element: <ProductPage /> },
-            { path: "/cart", element: <CartPage /> },
-            { path: "/login", element: <LoginPage /> },
-            { path: "/signup", element: <SignupPage /> },
+            { index: true, element: <Home /> },
+            //     { path: "/product/:id", element: <ProductPage /> },
+            //     { path: "/cart", element: <CartPage /> },
+            { path: "/login", element: <Login /> },
+            { path: "/signup", element: <Signup /> },
         ],
     },
 ]);

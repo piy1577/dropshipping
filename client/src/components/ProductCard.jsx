@@ -1,19 +1,28 @@
-// ProductCard.js
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Button, Card } from "react-bootstrap";
 
-function ProductCard({ product }) {
+const ProductCard = () => {
+    const [width, setWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        window.addEventListener("resize", () => setWidth(window.innerWidth));
+    }, []);
     return (
-        <div className="product-card">
-            <img src={product.image} alt={product.title} />
-            <h2>{product.title}</h2>
-            <p>{product.description}</p>
-            <h3>${product.price}</h3>
-            <Link to={`/product/${product.id}`}>View Details</Link>
-        </div>
+        <Card style={width > 350 ? { width: "300px" } : { width: "240px" }}>
+            <Card.Img
+                variant="top"
+                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
+            />
+            <Card.Body>
+                <Card.Title>Card Title</Card.Title>
+                <Card.Text>
+                    Some quick example text to build on the card title and make
+                    up the bulk of the card's content.
+                </Card.Text>
+                <Button variant="primary">Go somewhere</Button>
+            </Card.Body>
+        </Card>
     );
-}
+};
 
 export default ProductCard;
-
-// {image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80", title: "Headphone", description: "Best headphone at this price", price: 1500, id: 1}
