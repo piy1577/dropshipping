@@ -12,7 +12,6 @@ const userModel = mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, "Password is required"]
     },
     cart: {
         type: [mongoose.Schema.ObjectId],
@@ -27,15 +26,13 @@ const userModel = mongoose.Schema({
     }
 })
 
-userModel.pre('save', async function (next) {
-    const salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-});
 
 userModel.statics.login = async function (email, password) {
     const user = await this.findOne({ email });
     if (user) {
+        if (user.password === null) {
+            throw new Error('Use signin with google');
+        }
         if (await bcrypt.compare(password, user.password)) {
             return user;
         } else {

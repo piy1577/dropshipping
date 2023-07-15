@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FloatingLabel, Form, Button, Row, Col, Image } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import svg from "../image/undraw_programming_re_kg9v.svg";
-import { FcGoogle } from "react-icons/fc";
 import { useDispatch } from "react-redux";
 import { authActions } from "../store";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
     const [input, setInput] = useState({ email: "", password: "" });
@@ -26,7 +27,9 @@ const Login = () => {
             const response = await res.json();
             if (res.ok) {
                 if (response.success) {
-                    document.cookie = `jwt=${response.token}`;
+                    const date = new Date();
+                    date.setTime(date.getTime() + 3 * 24 * 60 * 60 * 1000);
+                    document.cookie = `jwt=${response.token};expires=${date.toUTCString}`;
                     dispatch(authActions.login(response.user));
                     redirect("/");
                 }
@@ -46,7 +49,6 @@ const Login = () => {
                     style={{
                         width: "80%",
                         marginLeft: "10%",
-                        height: "100%",
                     }}
                 >
                     <h1 style={{ textAlign: "center" }}>Login</h1>
@@ -84,7 +86,7 @@ const Login = () => {
                             <Form.Group>
                                 <Form.Check
                                     checked={show}
-                                    onClick={() => setShow((t) => !t)}
+                                    onChange={() => setShow((t) => !t)}
                                     label="Show Password"
                                 />
                             </Form.Group>
@@ -98,22 +100,55 @@ const Login = () => {
                             Submit
                         </Button>
                     </Row>
-                    <Row>
-                        <Button variant="outline-primary" className="mt-3">
-                            <FcGoogle /> Sign in with Google
-                        </Button>
-                    </Row>
-                    <Row>
-                        <Button
-                            as={Link}
-                            to="/signup"
-                            variant="link"
-                            className="mt-3"
-                        >
-                            New User? Create an Account
-                        </Button>
-                    </Row>
                 </Form>
+                <Row
+                    style={{
+                        width: "181px",
+                        margin: "20px auto",
+                    }}
+                >
+                    <GoogleOAuthProvider clientId="809388333953-mp4ic4ssmigroi4aa1oi98opm2u0cgjt.apps.googleusercontent.com">
+                        <GoogleLogin
+                            onSuccess={async (credentialResponse) => {
+                                const res = await fetch(
+                                    "http://localhost:8000/google/login",
+                                    {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                            Authorization: `Bearer ${credentialResponse.credential}`,
+                                        },
+                                    }
+                                );
+                                const response = await res.json();
+                                if (response.success) {
+                                    const date = new Date();
+                                    date.setTime(
+                                        date.getTime() + 3 * 24 * 60 * 60 * 1000
+                                    );
+                                    document.cookie = `jwt=${response.token};expires=${date.toUTCString}`;
+                                    dispatch(authActions.login(response.user));
+                                    redirect("/");
+                                } else {
+                                    alert("login Failed");
+                                }
+                            }}
+                            onError={() => {
+                                console.log("Login Failed");
+                            }}
+                        />
+                    </GoogleOAuthProvider>
+                </Row>
+                <Row>
+                    <Button
+                        as={Link}
+                        to="/signup"
+                        variant="link"
+                        className="mt-3"
+                    >
+                        New User? Create an Account
+                    </Button>
+                </Row>
             </Col>
             <Col>
                 <Image src={svg} thumbnail style={{ border: "none" }} />

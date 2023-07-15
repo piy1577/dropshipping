@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken')
+const jwt_decode = require('jwt-decode')
 const userModel = require('../model/User.model.js')
-import { google } from 'googleapis';
+const bcrypt = require('bcrypt')
 
-const createToken = ({ id }) => {
-    return jwt.sign(id, process.env.JWT_SECRET);
+const createToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '3d' });
 }
 
 const errorHandler = (err) => {
@@ -38,8 +39,10 @@ const errorHandler = (err) => {
 
 const signup = async (req, res) => {
     const { email, password, name } = req.body;
+    const salt = await bcrypt.genSalt();
     try {
-        const user = await userModel.create({ email, password, name });
+        const encrypted_password = await bcrypt.hash(password, salt);
+        const user = await userModel.create({ email, password: encrypted_password, name, profileImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWnW0NUpcrZcGZeUJ4e50ZLU8ugS9GPPoqww&usqp=CAU" });
         const token = createToken(user._id)
         user.password = undefined;
         res.status(200).json({ success: true, user, token });
@@ -66,24 +69,43 @@ const login = async (req, res) => {
 const isLoggedin = async (req, res) => {
     const token = req.headers.authorization.trim().split(' ')[1];
     try {
-        jwt.verify(token, process.env.JWT_SECRET);
-        res.status(200).send({ success: true });
+        const { id } = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await userModel.findById({ _id: id });
+        res.status(200).json({ success: true, user })
     } catch (err) {
-        console.log(err);
         res.status(401).send({ success: false });
     }
 }
 
-const oauth2Client = new google.auth.Oauth2(
-    process.env.CLIENT_ID,
-    process.env.CLIENT_SECRET,
-    process.env.REDIRECT_URL
-)
+const googleSignup = async (req, res) => {
+    const googleToken = req.headers.authorization.trim().split(' ')[1];
+    try {
+        const profile = jwt_decode(googleToken);
+        const user = await userModel.create({ email: profile.email, name: profile.name, profileImage: profile.picture || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWnW0NUpcrZcGZeUJ4e50ZLU8ugS9GPPoqww&usqp=CAU" });
+        const token = createToken(user._id)
+        res.status(200).json({ success: true, user, token });
+    } catch (err) {
+        const error = errorHandler(err);
+        console.log(err);
+        res.status(401).json({ success: false, message: error });
+    }
+}
 
-const googlesignup = (req, res) => {
-
+const googleLogin = async (req, res) => {
+    const googleToken = req.headers.authorization.trim().split(' ')[1];
+    try {
+        const profile = jwt_decode(googleToken);
+        const user = await userModel.findOne({ email: profile.email });
+        const token = createToken(user._id);
+        user.password = undefined;
+        res.status(200).json({ success: true, user, token });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(401).json({ success: false });
+    }
 }
 
 module.exports = {
-    signup, login, isLoggedin
-}
+    signup, login, isLoggedin, googleSignup, googleLogin
+}   

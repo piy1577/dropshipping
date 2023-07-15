@@ -7,6 +7,7 @@ const app = express();
 app.use(cors({
     origin: '*'
 }));
+
 app.use(helmet())
 app.use(express.json());
 app.use('/', userRouter)
