@@ -13,6 +13,12 @@ import {
     Card,
 } from "react-bootstrap";
 import svg from "../image/undraw_profile_details_re_ch9r.svg";
+import {
+    changeEmail,
+    changeName,
+    changePasswordHandler,
+    imageUploadHandler,
+} from "../components/http_requests";
 
 const Profile = () => {
     const state = useSelector((state) => state);
@@ -24,14 +30,29 @@ const Profile = () => {
         confirmPassword: "",
     });
     const dispatch = useDispatch();
+
     return (
         <Container>
             <Row>
-                <Col>
+                <Col md={8}>
                     <Form>
                         <Row>
+                            <input
+                                type="file"
+                                id="imageInput"
+                                accept="image/*"
+                                onChange={(e) => {
+                                    imageUploadHandler(e, dispatch);
+                                }}
+                                style={{ display: "none" }}
+                            />
                             <Image
                                 src={state.profileImage}
+                                onClick={() =>
+                                    document
+                                        .getElementById("imageInput")
+                                        .click()
+                                }
                                 style={{
                                     borderRadius: "50%",
                                     height: "100px",
@@ -54,6 +75,7 @@ const Profile = () => {
                             <Button
                                 variant="outline-secondary"
                                 id="button-addon2"
+                                onClick={changeName.bind(null, input)}
                             >
                                 Change Name
                             </Button>
@@ -73,6 +95,7 @@ const Profile = () => {
                             <Button
                                 variant="outline-secondary"
                                 id="button-addon2"
+                                onClick={changeEmail.bind(null, input)}
                             >
                                 Change Email
                             </Button>
@@ -139,6 +162,10 @@ const Profile = () => {
                                 <Button
                                     variant="outline-secondary"
                                     className="mt-3"
+                                    onClick={changePasswordHandler.bind(
+                                        null,
+                                        input
+                                    )}
                                 >
                                     Submit
                                 </Button>
@@ -147,8 +174,8 @@ const Profile = () => {
                     </Form>
                 </Col>
 
-                <Col>
-                    <Image src={svg} />
+                <Col md={4}>
+                    <Image width={"100%"} src={svg} />
                 </Col>
             </Row>
         </Container>

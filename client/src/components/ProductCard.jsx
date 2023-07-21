@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card } from "react-bootstrap";
+import { Badge, Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-const ProductCard = () => {
+const ProductCard = ({ data }) => {
     const [width, setWidth] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -12,21 +13,29 @@ const ProductCard = () => {
             border="secondary"
             style={
                 width > 350
-                    ? { width: "300px", margin: "10px" }
-                    : { width: "240px", margin: "1px" }
+                    ? { width: "300px", margin: "10px auto" }
+                    : { width: "240px", margin: "10px auto" }
             }
         >
-            <Card.Img
-                variant="top"
-                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
-            />
+            <Card.Img variant="top" src={data.image} />
             <Card.Body>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Text>
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
-                </Card.Text>
-                <Button variant="primary">Go somewhere</Button>
+                <Card.Title style={{ textTransform: "uppercase" }}>
+                    {data.name}
+                </Card.Title>
+                <Badge
+                    bg={"secondary"}
+                    style={{
+                        padding: "0.5rem",
+                        margin: "10px 0px",
+                        fontSize: "16px",
+                    }}
+                >
+                    &#8377;&nbsp;{data.price}
+                </Badge>
+                <br />
+                <Button as={Link} to={`/${data._id}`} variant="primary">
+                    See product
+                </Button>
             </Card.Body>
         </Card>
     );

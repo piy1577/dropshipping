@@ -6,9 +6,8 @@ import ProductCard from "./ProductCard";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/scrollbar";
 
-const Carousel = () => {
+const Carousel = ({ data }) => {
     return (
         <Swiper
             modules={[Navigation, Pagination]}
@@ -41,24 +40,11 @@ const Carousel = () => {
                 alignItems: "center",
             }}
         >
-            <SwiperSlide>
-                <ProductCard />
-            </SwiperSlide>
-            <SwiperSlide>
-                <ProductCard />
-            </SwiperSlide>
-            <SwiperSlide>
-                <ProductCard />
-            </SwiperSlide>
-            <SwiperSlide>
-                <ProductCard />
-            </SwiperSlide>
-            <SwiperSlide>
-                <ProductCard />
-            </SwiperSlide>
-            <SwiperSlide>
-                <ProductCard />
-            </SwiperSlide>
+            {data.map((item, i) => (
+                <SwiperSlide key={i}>
+                    <ProductCard data={item} />
+                </SwiperSlide>
+            ))}
         </Swiper>
     );
 };

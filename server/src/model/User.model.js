@@ -6,16 +6,16 @@ const userModel = mongoose.Schema({
     email: {
         type: String,
         required: [true, 'Email is required'],
+        lowercase: true,
         unique: [true, 'Email already exists'],
         validate: [validator.isEmail, 'Email is not validate'],
-        lowercase: true,
     },
     password: {
         type: String,
     },
     cart: {
-        type: [mongoose.Schema.ObjectId],
-        default: [],
+        type: Object,
+        default: {},
     },
     profileImage: {
         type: String,

@@ -1,12 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home";
-// import ProductPage from "./pages/ProductPage";
-import Cart from "./pages/Cart";
+import { Home, Cart, Login, Signup, Profile, ProductPage } from "./pages";
 import Header from "./components/Header";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
 import CheckAuthorization from "./components/CheckAuthorization";
-import Profile from "./pages/Profile";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 const Router = createBrowserRouter([
     {
@@ -21,7 +17,18 @@ const Router = createBrowserRouter([
                     </CheckAuthorization>
                 ),
             },
-            //     { path: "/product/:id", element: <ProductPage /> },
+            {
+                path: "/paymentsuccess",
+                element: <PaymentSuccess />,
+            },
+            {
+                path: "/:id",
+                element: (
+                    <CheckAuthorization>
+                        <ProductPage />
+                    </CheckAuthorization>
+                ),
+            },
             {
                 path: "/cart",
                 element: (
