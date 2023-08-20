@@ -1,0 +1,32 @@
+@media (max-width: 373px) {
+    .header {
+        flex-direction: column;
+        gap: 10px;
+        > .main {
+            width: 100%;
+            font-size: 5vw;
+            > .show {
+                display: block;
+                > svg {
+                    font-size: 10vw;
+                }
+            }
+        }
+        > .Links {
+            width: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            background-color: lightgray;
+            > a {
+                width: 100%;
+                font-size: 5vw;
+                text-align: center;
+                background-color: rgb(159, 158, 158);
+                padding: 5px;
+                color: white;
+            }
+        }
+    }
+}

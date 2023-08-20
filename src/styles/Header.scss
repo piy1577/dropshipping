@@ -1,0 +1,38 @@
+.header {
+    width: 100vw;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    font-family: "Roboto";
+    flex-wrap: wrap;
+
+    > .main {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        > .show {
+            display: none;
+            > svg {
+                background-color: lightgray;
+                font-size: 25px;
+                padding: 2px;
+                border-radius: 5px;
+            }
+        }
+    }
+
+    .Links {
+        display: flex;
+        gap: 10px;
+        background-color: white;
+        > a {
+            text-decoration: none;
+            color: gray;
+            &:hover {
+                color: black;
+            }
+        }
+    }
+}
