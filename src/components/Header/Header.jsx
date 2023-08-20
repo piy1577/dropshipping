@@ -20,7 +20,7 @@ const Header = () => {
                 className="Links"
                 style={show ? { display: "flex" } : { display: "none" }}
             >
-                <Link href="">Home</Link>
+                <Link href="/">Home</Link>
 
                 {user ? (
                     <>
@@ -31,6 +31,7 @@ const Header = () => {
                     <>
                         <Link href="/signup">SignUp</Link>
                         <Link href="/login">Login</Link>
+                        <Link href="/signup/business">For Business</Link>
                     </>
                 )}
             </div>
