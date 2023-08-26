@@ -1,19 +1,20 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { auth } from "../firebase";
-
+import * as firebase from "@/firebase";
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
+    const [orderItems, setOrderItems] = useState([]);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            setUser(user);
+        const unsubscribe = firebase.auth.onAuthStateChanged((user) => {
+            firebase.Fetch(user, setUser, setCartItems, setOrderItems);
             setLoading(false);
         });
+
         return () => {
             unsubscribe();
         };
@@ -22,6 +23,7 @@ export const CartProvider = ({ children }) => {
     const addToCart = (item) => {
         setCartItems([...cartItems, item]);
     };
+
     const removeFromCart = (item) => {
         setCartItems((t) => {
             const index = t.indexOf(item);
@@ -31,9 +33,27 @@ export const CartProvider = ({ children }) => {
             return t;
         });
     };
+
+    const orderDone = (item) => {
+        setOrderItems((t) => {
+            const index = t.indexOf(item);
+            if (index > -1) {
+                t.splice(index, 1);
+            }
+        });
+    };
+
     return (
         <CartContext.Provider
-            value={{ cartItems, addToCart, removeFromCart, user }}
+            value={{
+                cartItems,
+                addToCart,
+                removeFromCart,
+                orderDone,
+                orderItems,
+                user,
+                setUser,
+            }}
         >
             {!loading && <>{children}</>}
         </CartContext.Provider>

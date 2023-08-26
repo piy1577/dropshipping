@@ -23,15 +23,22 @@ const Header = () => {
                 <Link href="/">Home</Link>
 
                 {user ? (
-                    <>
-                        <Link href="/cart">Cart</Link>
-                        <Link href="/profile">Profile</Link>
-                    </>
+                    user.role === "buyer" ? (
+                        <>
+                            <Link href="/cart">Cart</Link>
+                            <Link href="/profile">Profile</Link>
+                        </>
+                    ) : (   
+                        <>
+                            <Link href="/order">Orders</Link>
+                            <Link href="/products">Products</Link>
+                            <Link href="/profile">Profile</Link>
+                        </>
+                    )
                 ) : (
                     <>
                         <Link href="/signup">SignUp</Link>
                         <Link href="/login">Login</Link>
-                        <Link href="/signup/business">For Business</Link>
                     </>
                 )}
             </div>

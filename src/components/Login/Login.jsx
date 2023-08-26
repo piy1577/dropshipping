@@ -1,15 +1,23 @@
 "use client";
 import React, { useState } from "react";
-import login from "../firebase/Login";
+import { useCart } from "../store";
+import * as firebase from "@/firebase";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { setUser } = useCart();
+    const router = useRouter();
 
     return (
         <div className="login">
             <h2>Login</h2>
-            <form onSubmit={(e) => login(e, email, password)}>
+            <form
+                onSubmit={(e) =>
+                    firebase.Login(e, { email, password }, setUser, router)
+                }
+            >
                 <input
                     type="email"
                     placeholder="Email"

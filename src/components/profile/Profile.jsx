@@ -1,22 +1,27 @@
 "use client";
-import React, { useState } from "react";
-import SignOut from "../firebase/SignOut";
+import React, { useEffect, useState } from "react";
 import { useCart } from "../store";
-import changePassword from "../firebase/changePassword";
-import profile from "../firebase/Profile";
-import { auth } from "../firebase";
 import { useRouter } from "next/navigation";
+import { signOut } from "@/firebase";
 
 const Profile = () => {
     const { user } = useCart();
     const router = useRouter();
-
     const [firstInput, setFirstInput] = useState({
-        name: user?.displayName || "",
-        phoneNumber: user?.phoneNumber || 0,
+        name: "",
+        phoneNumber: 0,
+        email: "",
     });
 
-    const [passwords, setPasswords] = useState({ current: "", new: "" });
+    useEffect(() => {
+        if (user) {
+            setFirstInput({
+                name: user?.displayName,
+                phoneNumber: user?.phoneNumber,
+                email: user?.email,
+            });
+        }
+    }, [user]);
 
     return (
         <>
@@ -34,51 +39,45 @@ const Profile = () => {
                     />
                 </div>
                 <div className="button">
-                    <button onClick={() => profile(firstInput)}>Submit</button>
+                    <button>Submit</button>
                 </div>
             </div>
-
             <div className="profile">
-                <h3>Change Password</h3>
                 <div className="inputs">
-                    <label>Current Password: </label>
+                    <label>Phone Number: </label>
                     <input
                         type="text"
-                        placeholder="Type your Current Password"
-                        value={passwords.current}
+                        value={firstInput.phoneNumber}
                         onInput={(e) =>
-                            setPasswords((t) => {
-                                return { ...t, current: e.target.value };
-                            })
-                        }
-                    />
-                </div>
-
-                <div className="inputs">
-                    <label>New Password: </label>
-                    <input
-                        type="text"
-                        placeholder="Type your New Password"
-                        value={passwords.new}
-                        onInput={(e) =>
-                            setPasswords((t) => {
-                                return { ...t, new: e.target.value };
+                            setFirstInput((t) => {
+                                return { ...t, phoneNumber: e.target.value };
                             })
                         }
                     />
                 </div>
                 <div className="button">
-                    <button
-                        onClick={() =>
-                            changePassword(auth.currentUser, passwords)
+                    <button>Submit</button>
+                </div>
+            </div>
+            <div className="profile">
+                <div className="inputs">
+                    <label>Name: </label>
+                    <input
+                        type="text"
+                        value={firstInput.email}
+                        onInput={(e) =>
+                            setFirstInput((t) => {
+                                return { ...t, email: e.target.value };
+                            })
                         }
-                    >
-                        Change
-                    </button>
+                    />
+                </div>
+                <div className="button">
+                    <button>Submit</button>
                 </div>
             </div>
 
-            <button onClick={() => SignOut(router)}>Sign Out</button>
+            <button onClick={() => signOut(router)}>Sign Out</button>
         </>
     );
 };
