@@ -12,7 +12,7 @@ const handler = async (e, { email, password }, set, router) => {
         );
         const getData = await getDoc(doc(firebase.db, "users", user.user.uid));
         set({ ...user, ...getData });
-        router.push("/");
+        router("/");
     } catch (err) {
         console.log(err);
     }

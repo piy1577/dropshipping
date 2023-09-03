@@ -1,6 +1,7 @@
 @media (max-width: 373px) {
     .header {
         flex-direction: column;
+        height: auto;
         gap: 10px;
         > .main {
             width: 100%;
@@ -30,3 +31,20 @@
         }
     }
 }
+
+// @media screen and (max-width: 800px) {
+//     .login {
+//         > .left {
+//             > form {
+//                 width: 95vw;
+//             }
+//         }
+//     }
+//     .signup {
+//         > .left {
+//             > form {
+//                 width: 95vw;
+//             }
+//         }
+//     }
+// }

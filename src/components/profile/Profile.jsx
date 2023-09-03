@@ -1,12 +1,11 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "../store";
-import { useRouter } from "next/navigation";
-import { signOut } from "@/firebase";
+import { signOut } from "../../firebase";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
     const { user } = useCart();
-    const router = useRouter();
+    const router = useNavigate();
     const [firstInput, setFirstInput] = useState({
         name: "",
         phoneNumber: 0,
@@ -24,61 +23,58 @@ const Profile = () => {
     }, [user]);
 
     return (
-        <>
-            <div className="profile">
-                <div className="inputs">
-                    <label>Name: </label>
-                    <input
-                        type="text"
-                        value={firstInput.name}
-                        onInput={(e) =>
-                            setFirstInput((t) => {
-                                return { ...t, name: e.target.value };
-                            })
-                        }
-                    />
-                </div>
-                <div className="button">
+        <div className="profile">
+            <h1>Change your Profile</h1>
+            <form className="inputs">
+                <label>Name: </label>
+                <input
+                    type="text"
+                    value={firstInput.name}
+                    onInput={(e) =>
+                        setFirstInput((t) => {
+                            return { ...t, name: e.target.value };
+                        })
+                    }
+                />
+                <div className="btn">
                     <button>Submit</button>
                 </div>
-            </div>
-            <div className="profile">
-                <div className="inputs">
-                    <label>Phone Number: </label>
-                    <input
-                        type="text"
-                        value={firstInput.phoneNumber}
-                        onInput={(e) =>
-                            setFirstInput((t) => {
-                                return { ...t, phoneNumber: e.target.value };
-                            })
-                        }
-                    />
-                </div>
-                <div className="button">
+            </form>
+            <form className="inputs">
+                <label>Phone Number: </label>
+                <input
+                    type="text"
+                    value={firstInput.phoneNumber}
+                    onInput={(e) =>
+                        setFirstInput((t) => {
+                            return { ...t, phoneNumber: e.target.value };
+                        })
+                    }
+                />
+                <div className="btn">
                     <button>Submit</button>
                 </div>
-            </div>
-            <div className="profile">
-                <div className="inputs">
-                    <label>Name: </label>
-                    <input
-                        type="text"
-                        value={firstInput.email}
-                        onInput={(e) =>
-                            setFirstInput((t) => {
-                                return { ...t, email: e.target.value };
-                            })
-                        }
-                    />
-                </div>
-                <div className="button">
-                    <button>Submit</button>
-                </div>
-            </div>
+            </form>
 
-            <button onClick={() => signOut(router)}>Sign Out</button>
-        </>
+            <form className="inputs">
+                <label>Email: </label>
+                <input
+                    type="text"
+                    value={firstInput.email}
+                    onInput={(e) =>
+                        setFirstInput((t) => {
+                            return { ...t, email: e.target.value };
+                        })
+                    }
+                />
+                <div className="btn">
+                    <button>Submit</button>
+                </div>
+            </form>
+            <div className="btn">
+                <button onClick={() => signOut(router)}>Sign Out</button>
+            </div>
+        </div>
     );
 };
 

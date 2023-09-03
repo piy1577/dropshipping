@@ -3,6 +3,6 @@ import * as firebase from ".";
 
 const handler = async (router) => {
     await signOut(firebase.auth);
-    router.push("/");
+    router("/");
 };
 export default handler;

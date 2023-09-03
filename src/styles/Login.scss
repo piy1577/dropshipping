@@ -1,0 +1,67 @@
+.login {
+    min-height: calc(100vh - 84px);
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+    > .left {
+        margin: auto;
+        > form {
+            width: 25vw;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+            > h1 {
+                padding: 20px;
+            }
+            > input {
+                padding: 10px 20px;
+                border-radius: 20px;
+                border: 2px solid gray;
+            }
+
+            > button {
+                padding: 10px 32px;
+                border-radius: 20px;
+                border: 2px solid dodgerblue;
+                background-color: dodgerblue;
+                color: white;
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgb(26, 113, 199);
+                }
+            }
+        }
+        > .change {
+            width: 25vw;
+            text-align: center;
+        }
+    }
+    > .right {
+        max-height: 90vh;
+        width: 70%;
+        > img {
+            float: right;
+            height: 100%;
+            max-width: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .login {
+        > .left {
+            > form {
+                width: 70vw;
+                > h1 {
+                    text-align: center;
+                }
+            }
+            > .change {
+                width: 70vw;
+            }
+        }
+    }
+}

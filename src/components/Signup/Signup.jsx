@@ -1,60 +1,30 @@
-"use client";
-import React, { useState } from "react";
-// import signup from "../firebase/Signup";
-import * as firebase from "@/firebase";
-import { useCart } from "../store";
+/* eslint-disable no-unused-vars */
+import Form from "./Form";
+import { Link } from "react-router-dom";
+import src from "../../images/Signup.svg";
+import { useEffect, useState } from "react";
 
 const Signup = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState(0);
-    const [Name, setName] = useState("");
-    const [role, setRole] = useState("");
-    const { setUser } = useCart();
+    const [width, setWidth] = useState(window.innerWidth);
+    useEffect(() => {
+        window.addEventListener("resize", () => setWidth(window.innerWidth));
+    }, []);
     return (
-        <div>
-            <h2 className="signup">Signup</h2>
-            <form
-                onSubmit={(e) =>
-                    firebase.signUp(
-                        e,
-                        { email, password, phoneNumber, name: Name, role },
-                        setUser
-                    )
-                }
-            >
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Phone Number"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Name"
-                    value={Name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <select value={role} onChange={(e) => setRole(e.target.value)}>
-                    <option>Select the Role</option>
-                    <option value="buyer">Buyer</option>
-                    <option value="seller">Seller</option>
-                </select>
-                <button type="submit">Signup</button>
-            </form>
-        </div>
+        <>
+            <div className="signup">
+                <div className="left">
+                    <Form />
+                    <div className="change">
+                        Already a user? <Link to="/login">Login</Link>
+                    </div>
+                </div>
+                {width > 800 && (
+                    <div className="right">
+                        <img src={src} />
+                    </div>
+                )}
+            </div>
+        </>
     );
 };
 

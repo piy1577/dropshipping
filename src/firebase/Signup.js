@@ -27,7 +27,7 @@ const handler = async (e, input, router) => {
         const docRef = doc(db, "users", user.user.uid);
 
         await setDoc(docRef, options);
-        router.push("/");
+        router("/");
     } catch (err) {
         console.error(err);
     }

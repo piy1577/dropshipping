@@ -1,6 +1,6 @@
 "use client";
-import Link from "next/link";
-import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import { MdOutlineStorage } from "react-icons/md";
 import { useCart } from "../store";
 
@@ -20,25 +20,29 @@ const Header = () => {
                 className="Links"
                 style={show ? { display: "flex" } : { display: "none" }}
             >
-                <Link href="/">Home</Link>
+                <Link to="/">Home</Link>
 
                 {user ? (
                     user.role === "buyer" ? (
                         <>
-                            <Link href="/cart">Cart</Link>
-                            <Link href="/profile">Profile</Link>
+                            <Link to="/cart">Cart</Link>
+                            <Link to="/profile">Profile</Link>
                         </>
-                    ) : (   
+                    ) : (
                         <>
-                            <Link href="/order">Orders</Link>
-                            <Link href="/products">Products</Link>
-                            <Link href="/profile">Profile</Link>
+                            {/* <Link to="/order">Orders</Link> */}
+                            <Link to="/products">Products</Link>
+                            <Link to="/profile">Profile</Link>
                         </>
                     )
                 ) : (
                     <>
-                        <Link href="/signup">SignUp</Link>
-                        <Link href="/login">Login</Link>
+                        <Link id="signup" to="/signup">
+                            SignUp
+                        </Link>
+                        <Link id="login" to="/login">
+                            Login
+                        </Link>
                     </>
                 )}
             </div>

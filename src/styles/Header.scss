@@ -1,12 +1,14 @@
 .header {
-    width: 100vw;
-
+    width: 98vw;
+    height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 5px 10px;
+    margin: auto;
     font-family: "Roboto";
     flex-wrap: wrap;
+    // background-color: #aaa;
 
     > .main {
         display: flex;
@@ -28,10 +30,32 @@
         gap: 10px;
         background-color: white;
         > a {
+            padding: 10px;
             text-decoration: none;
             color: gray;
             &:hover {
                 color: black;
+            }
+        }
+        > #signup {
+            padding: 10px 25px;
+            color: black;
+            border: 2px solid black;
+            border-radius: 20px;
+            &:hover {
+                cursor: pointer;
+                background-color: #eee;
+            }
+        }
+        > #login {
+            padding: 10px 25px;
+            background-color: black;
+            color: white;
+            border: 1px solid black;
+            border-radius: 20px;
+            &:hover {
+                cursor: pointer;
+                background-color: #555;
             }
         }
     }
